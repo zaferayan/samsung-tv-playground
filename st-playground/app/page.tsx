@@ -138,7 +138,10 @@ const CSS = `
 @media (prefers-reduced-motion:reduce){ .rwrap .led{transition:none} }
 `;
 
-/* kumanda.html body markup — birebir (token/connection accordion ve settings butonu çıkarıldı, token artık sunucuda) */
+/* GitHub Pages alt-yolu: asset'ler (/icons, /lib) bu önekle servis edilir */
+const BP = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+/* kumanda.html body markup — birebir (token girişi üst bardan, client-side) */
 const HTML = `
 <div class="rwrap">
   <header class="topbar">
@@ -159,7 +162,7 @@ const HTML = `
   <div class="layout">
     <div class="left">
       <div class="card devcard">
-        <img class="thumb" src="/icons/tv.png" alt="TV">
+        <img class="thumb" src="${BP}/icons/tv.png" alt="TV">
         <div class="devmeta">
           <div class="devname" id="devName" data-i18n="noDevice">Cihaz seçilmedi</div>
           <div class="devrow">
@@ -183,11 +186,11 @@ const HTML = `
       <div class="searchsub needs-conn"><span data-i18n="searchSub1">YouTube'da aratır · </span><button class="linkbtn" id="searchGo" data-i18n="searchWeb">web'de ara</button></div>
 
       <div class="tiles needs-conn">
-        <button class="tile" data-app="Netflix" data-appid="3201907018807"><img class="brandimg" src="/icons/brands/netflix.png" alt="Netflix"><span class="tl">Netflix</span></button>
-        <button class="tile" data-app="Prime Video" data-appid="3201910019365"><img class="brandimg" src="/icons/brands/prime-video.png" alt="Prime Video"><span class="tl">Prime Video</span></button>
-        <button class="tile" data-app="Disney+ Hotstar" data-appid="3201901017640"><img class="brandimg" src="/icons/brands/disney-plus.png" alt="Disney+"><span class="tl">Disney+</span></button>
-        <button class="tile" data-app="YouTube" data-appid="111299001912"><img class="brandimg" src="/icons/brands/youtube.png" alt="YouTube"><span class="tl">YouTube</span></button>
-        <button class="tile" data-app="Spotify" data-appid="3201606009684"><img class="brandimg" src="/icons/brands/spotify.png" alt="Spotify"><span class="tl">Spotify</span></button>
+        <button class="tile" data-app="Netflix" data-appid="3201907018807"><img class="brandimg" src="${BP}/icons/brands/netflix.png" alt="Netflix"><span class="tl">Netflix</span></button>
+        <button class="tile" data-app="Prime Video" data-appid="3201910019365"><img class="brandimg" src="${BP}/icons/brands/prime-video.png" alt="Prime Video"><span class="tl">Prime Video</span></button>
+        <button class="tile" data-app="Disney+ Hotstar" data-appid="3201901017640"><img class="brandimg" src="${BP}/icons/brands/disney-plus.png" alt="Disney+"><span class="tl">Disney+</span></button>
+        <button class="tile" data-app="YouTube" data-appid="111299001912"><img class="brandimg" src="${BP}/icons/brands/youtube.png" alt="YouTube"><span class="tl">YouTube</span></button>
+        <button class="tile" data-app="Spotify" data-appid="3201606009684"><img class="brandimg" src="${BP}/icons/brands/spotify.png" alt="Spotify"><span class="tl">Spotify</span></button>
       </div>
       <div class="searchsub needs-conn" style="margin-top:-14px" data-i18n="appHint">İpucu: YouTube'ta yazıp arayabilirsin. Diğer uygulamalar tıklayınca açılır.</div>
 
@@ -240,35 +243,35 @@ const HTML = `
     <aside class="right">
       <div class="remote off" id="remote">
         <div class="topline">
-          <button class="ib power" id="power" title="Güç" aria-label="Güç"><img src="/icons/01-guc.png" alt="Güç"></button>
+          <button class="ib power" id="power" title="Güç" aria-label="Güç"><img src="${BP}/icons/01-guc.png" alt="Güç"></button>
         </div>
         <div class="row3">
-          <button class="ib k" data-key="MENU" title="123 / Menü" aria-label="Menü"><img src="/icons/02-ayarlar-123.png" alt="123 / Menü"></button>
+          <button class="ib k" data-key="MENU" title="123 / Menü" aria-label="Menü"><img src="${BP}/icons/02-ayarlar-123.png" alt="123 / Menü"></button>
           <span class="led" id="led" title="Gösterge ışığı"></span>
-          <button class="ib k" id="mic" title="Sesle ara" aria-label="Mikrofon"><img src="/icons/03-mikrofon.png" alt="Mikrofon"></button>
+          <button class="ib k" id="mic" title="Sesle ara" aria-label="Mikrofon"><img src="${BP}/icons/03-mikrofon.png" alt="Mikrofon"></button>
         </div>
         <div class="ringwrap" id="dring">
-          <img class="ringimg" src="/icons/04-yon-halkasi.png" alt="Yön halkası">
-          <button class="okbtn" id="ok" data-key="OK" title="OK" aria-label="OK"><img src="/icons/05-tamam.png" alt="OK"></button>
+          <img class="ringimg" src="${BP}/icons/04-yon-halkasi.png" alt="Yön halkası">
+          <button class="okbtn" id="ok" data-key="OK" title="OK" aria-label="OK"><img src="${BP}/icons/05-tamam.png" alt="OK"></button>
           <span class="dflash" id="dflash"></span>
         </div>
         <div class="row3" style="justify-content:space-evenly">
-          <button class="ib m" data-key="BACK" title="Geri" aria-label="Geri"><img src="/icons/06-geri.png" alt="Geri"></button>
-          <button class="ib m" data-key="HOME" title="Ana ekran" aria-label="Home"><img src="/icons/07-ana-sayfa.png" alt="Ana ekran"></button>
-          <button class="ib m" id="playpause" title="Oynat / Duraklat" aria-label="Oynat Duraklat"><img src="/icons/08-oynat-duraklat.png" alt="Oynat Duraklat"></button>
+          <button class="ib m" data-key="BACK" title="Geri" aria-label="Geri"><img src="${BP}/icons/06-geri.png" alt="Geri"></button>
+          <button class="ib m" data-key="HOME" title="Ana ekran" aria-label="Home"><img src="${BP}/icons/07-ana-sayfa.png" alt="Ana ekran"></button>
+          <button class="ib m" id="playpause" title="Oynat / Duraklat" aria-label="Oynat Duraklat"><img src="${BP}/icons/08-oynat-duraklat.png" alt="Oynat Duraklat"></button>
         </div>
         <div class="vc" title="Ses (sol) / Kanal (sağ)">
-          <img src="/icons/09-ses-kanal.png" alt="Ses / Kanal">
+          <img src="${BP}/icons/09-ses-kanal.png" alt="Ses / Kanal">
           <button class="vz" style="left:1%;width:23%"  data-cap="audioVolume" data-cmd="volumeDown" aria-label="Ses azalt"></button>
           <button class="vz" style="left:25%;width:23%" data-cap="audioVolume" data-cmd="volumeUp"   aria-label="Ses artır"></button>
           <button class="vz" style="left:52%;width:23%" data-cap="tvChannel"  data-cmd="channelDown" aria-label="Kanal azalt"></button>
           <button class="vz" style="left:76%;width:23%" data-cap="tvChannel"  data-cmd="channelUp"   aria-label="Kanal artır"></button>
         </div>
         <div class="apps">
-          <button class="appbtn netflix" data-app="Netflix" data-appid="3201907018807" title="Netflix"><img src="/icons/10-netflix.png" alt="Netflix"></button>
-          <button class="appbtn prime" data-app="Prime Video" data-appid="3201910019365" title="Prime Video"><img src="/icons/11-prime-video.png" alt="Prime Video"></button>
-          <button class="appbtn disney" data-app="Disney+ Hotstar" data-appid="3201901017640" title="Disney+ Hotstar"><img src="/icons/12-disney-hotstar.png" alt="Disney+ Hotstar"></button>
-          <button class="appbtn youtube" data-app="YouTube" data-appid="111299001912" title="YouTube"><img src="/icons/13-youtube.png" alt="YouTube"></button>
+          <button class="appbtn netflix" data-app="Netflix" data-appid="3201907018807" title="Netflix"><img src="${BP}/icons/10-netflix.png" alt="Netflix"></button>
+          <button class="appbtn prime" data-app="Prime Video" data-appid="3201910019365" title="Prime Video"><img src="${BP}/icons/11-prime-video.png" alt="Prime Video"></button>
+          <button class="appbtn disney" data-app="Disney+ Hotstar" data-appid="3201901017640" title="Disney+ Hotstar"><img src="${BP}/icons/12-disney-hotstar.png" alt="Disney+ Hotstar"></button>
+          <button class="appbtn youtube" data-app="YouTube" data-appid="111299001912" title="YouTube"><img src="${BP}/icons/13-youtube.png" alt="YouTube"></button>
         </div>
       </div>
       <div class="rcaption" data-i18n="remoteHint">Halka: dokun = OK · kaydır = yön · Ses/Kanal çubuğu: sol = −, sağ = +</div>
@@ -291,7 +294,7 @@ export default function RemotePage() {
       run();
     } else {
       const s = document.createElement("script");
-      s.src = "/lib/lucide.min.js";
+      s.src = `${BP}/lib/lucide.min.js`;
       s.onload = run;
       document.body.appendChild(s);
     }
@@ -324,7 +327,7 @@ function wireRemote() {
       searchPh: "İçerik veya uygulama ara", searchSub1: "YouTube'da aratır · ", searchWeb: "web'de ara",
       srcTitle: "Kaynak", srcCap: "Giriş kaynağını seç.", chTitle: "Kanal", chCap: "Kanal numarasını gir.", chPh: "Kanal no (örn. 5)", go: "Git",
       volTitle: "Ses düzeyi", volCap: "TV'nin ses seviyesini ayarla.", accConn: "Bağlantı ayarları", accAdv: "Gelişmiş kontroller",
-      send: "Gönder", logDefault: "Cihazlar yükleniyor…", remoteHint: "Halka: dokun = OK · kaydır = yön · Ses/Kanal çubuğu: sol = −, sağ = +",
+      send: "Gönder", logDefault: "Üstteki alana SmartThings token'ını gir.", remoteHint: "Halka: dokun = OK · kaydır = yön · Ses/Kanal çubuğu: sol = −, sağ = +",
       loadingDevices: "cihazlar yükleniyor…", noTv: "TV bulunamadı", connectFirst: "Cihaz bulunamadı.", cleared: "silindi",
       enterQuery: "Arama metni gir.", enterChannel: "Geçerli kanal no gir.", micUnsupported: "Bu tarayıcı sesli aramayı desteklemiyor.",
       micListening: "🎤 Dinleniyor… konuş", argsJson: 'arguments JSON dizisi olmalı, örn. ["HOME","PRESS_AND_RELEASED"]', rateLimit: "Hız sınırı", deviceGeneric: "Cihaz", appHint: "İpucu: YouTube'ta yazıp arayabilirsin. Diğer uygulamalar tıklayınca açılır (uygulama içi arama bulut API'sinde yok).", arrivalTitle: "Eve gelince", arrivalCap: "TV aç → YouTube'da ara → ilk videoyu oynat.", playBtn: "Çal", appNoSearch: "uygulama içi arama bulut API'sinde yok, uygulama açılıyor" },
@@ -334,7 +337,7 @@ function wireRemote() {
       searchPh: "Search content or apps", searchSub1: "Searches YouTube · ", searchWeb: "search the web",
       srcTitle: "Source", srcCap: "Choose the input source.", chTitle: "Channel", chCap: "Enter the channel number.", chPh: "Channel no (e.g. 5)", go: "Go",
       volTitle: "Volume", volCap: "Adjust the TV volume.", accConn: "Connection settings", accAdv: "Advanced controls",
-      send: "Send", logDefault: "Loading devices…", remoteHint: "Ring: tap = OK · swipe = direction · Vol/Ch bar: left = −, right = +",
+      send: "Send", logDefault: "Enter your SmartThings token in the top bar.", remoteHint: "Ring: tap = OK · swipe = direction · Vol/Ch bar: left = −, right = +",
       loadingDevices: "loading devices…", noTv: "No TV found", connectFirst: "No device found.", cleared: "cleared",
       enterQuery: "Enter search text.", enterChannel: "Enter a valid channel no.", micUnsupported: "This browser doesn't support voice search.",
       micListening: "🎤 Listening… speak", argsJson: 'arguments must be a JSON array, e.g. ["HOME","PRESS_AND_RELEASED"]', rateLimit: "Rate limit", deviceGeneric: "Device", appHint: "Tip: you can search inside YouTube. Other apps just open on tap (no in-app search via the cloud).", arrivalTitle: "When I get home", arrivalCap: "Turn on TV → search YouTube → play first video.", playBtn: "Play", appNoSearch: "in-app search isn't available via the cloud, opening the app" },
@@ -363,7 +366,8 @@ function wireRemote() {
   const blockedMs = () => Math.max(0, blockedUntil - Date.now());
 
   async function call(path: string, opts: any = {}) {
-    const res = await fetch("/api/st" + path, { ...opts, headers: { "Content-Type": "application/json", ...(opts.headers || {}) } });
+    const token = LS.get("st_token") || "";
+    const res = await fetch("https://api.smartthings.com/v1" + path, { ...opts, headers: { Authorization: "Bearer " + token, "Content-Type": "application/json", ...(opts.headers || {}) } });
     const text = await res.text(); let body: any; try { body = text ? JSON.parse(text) : null; } catch { body = text; }
     if (res.status === 429) { const mm = JSON.stringify(body || "").match(/retry in\s+(\d+)\s*millis/i); const ms = mm ? parseInt(mm[1], 10) : 15000; blockedUntil = Date.now() + ms + 500; throw new Error(`429 · ${t("rateLimit")} ${Math.ceil(ms / 1000)} sn`); }
     if (!res.ok) { const m = (body && (body.error?.message || body.message)) || res.statusText; throw new Error(res.status + " " + m); }
@@ -502,6 +506,8 @@ function wireRemote() {
     const th = LS.get("st_theme"); if (th) document.documentElement.setAttribute("data-theme", th);
     icons(); setLang(lang); setOn(false);
     $("#log").textContent = t("logDefault");
-    loadDevices();
+    const token = LS.get("st_token") || "";
+    if (token) loadDevices();
+    else log(lang === "en" ? "Enter your SmartThings token in the top bar." : "Üstteki alana SmartThings token'ını gir.");
   })();
 }

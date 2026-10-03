@@ -1,9 +1,32 @@
-// Tarayıcı tarafı istemci: her şey /api/st/* proxy'sine gider (token sunucuda).
+// Client-direct: tarayıcı doğrudan api.smartthings.com'u çağırır (CORS açık).
+// Token kullanıcının tarayıcısında (localStorage) tutulur — sunucu yok, statik çalışır.
+
+const BASE = "https://api.smartthings.com/v1";
+export const TOKEN_KEY = "st_token";
+
+export function getToken(): string {
+  try {
+    return localStorage.getItem(TOKEN_KEY) || "";
+  } catch {
+    return "";
+  }
+}
+export function setToken(t: string) {
+  try {
+    localStorage.setItem(TOKEN_KEY, t);
+  } catch {}
+}
 
 export async function st<T = unknown>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`/api/st/${path}`, {
+  const token = getToken();
+  if (!token) throw new Error("Token gerekli — üstteki alana SmartThings PAT gir.");
+  const res = await fetch(`${BASE}/${path}`, {
     ...init,
-    headers: { "Content-Type": "application/json", ...(init?.headers || {}) },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      ...(init?.headers || {}),
+    },
   });
   const text = await res.text();
   let data: unknown;
