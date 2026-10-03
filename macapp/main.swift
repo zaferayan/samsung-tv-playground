@@ -14,11 +14,21 @@ enum Lang {
 // MARK: - Yapılandırma (token + TV device id)
 enum Config {
     static let path = NSHomeDirectory() + "/Library/Application Support/TVRemote/config.json"
+    static let defaultDeviceId = "4567d7b7-0092-e6d8-df40-cc63eb0afe07"  // 65" Neo QLED
     static func load() -> (token: String, deviceId: String) {
         guard let data = FileManager.default.contents(atPath: path),
               let obj = try? JSONSerialization.jsonObject(with: data) as? [String: String]
         else { return ("", "") }
         return (obj["token"] ?? "", obj["deviceId"] ?? "")
+    }
+    static func save(token: String, deviceId: String) {
+        let dir = (path as NSString).deletingLastPathComponent
+        try? FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true)
+        let obj = ["token": token, "deviceId": deviceId.isEmpty ? defaultDeviceId : deviceId]
+        if let data = try? JSONSerialization.data(withJSONObject: obj, options: .prettyPrinted) {
+            try? data.write(to: URL(fileURLWithPath: path))
+            try? FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: path)
+        }
     }
 }
 
@@ -140,11 +150,20 @@ struct PanelView: View {
     @State private var q = ""
     @State private var muted = false
     @State private var tvOn = true
+    @State private var tokenField = ""
+    @State private var showToken = false
     @FocusState private var focused: Bool
 
     private func search() {
         let s = q.trimmingCharacters(in: .whitespacesAndNewlines)
         if !s.isEmpty { tv.searchAndEnter(s) }
+    }
+
+    private func saveToken() {
+        let dev = Config.load().deviceId
+        Config.save(token: tokenField.trimmingCharacters(in: .whitespacesAndNewlines), deviceId: dev)
+        tv.status = Lang.s("✓ token kaydedildi", "✓ token saved")
+        showToken = false
     }
 
     private let accent = Color(red: 0.34, green: 0.55, blue: 1.0)
@@ -169,6 +188,28 @@ struct PanelView: View {
                 Image(systemName: "tv").font(.system(size: 11)).foregroundStyle(accent)
                 Text(Lang.s("TV Kumanda", "TV Remote")).font(.system(size: 12, weight: .semibold)).foregroundStyle(.secondary)
                 Spacer()
+                Button(action: { showToken.toggle() }) {
+                    Image(systemName: "key").font(.system(size: 11)).foregroundStyle(.secondary)
+                }.buttonStyle(.plain).help(Lang.s("Token", "Token"))
+            }
+
+            // Token girişi (gizli, anahtar ikonuyla açılır)
+            if showToken {
+                VStack(spacing: 6) {
+                    HStack(spacing: 6) {
+                        SecureField("SmartThings PAT…", text: $tokenField)
+                            .textFieldStyle(.roundedBorder)
+                        Button(Lang.s("Kaydet", "Save")) { saveToken() }
+                    }
+                    HStack {
+                        Link(Lang.s("token al ↗", "get token ↗"),
+                             destination: URL(string: "https://account.smartthings.com/tokens")!)
+                            .font(.system(size: 10)).foregroundStyle(accent)
+                        Spacer()
+                        Text(Lang.s("24 saatte yenilenir", "expires in 24h"))
+                            .font(.system(size: 10)).foregroundStyle(.secondary)
+                    }
+                }
             }
 
             // Arama çubuğu
@@ -249,6 +290,7 @@ struct PanelView: View {
         .padding(16)
         .frame(width: 252)
         .onAppear {
+            tokenField = Config.load().token
             speech.onText = { q = $0 }
             speech.onFinal = { q = $0; search() }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { focused = true }

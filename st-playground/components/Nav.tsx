@@ -50,6 +50,15 @@ export default function Nav() {
           );
         })}
         <div className="ml-auto flex items-center gap-2">
+          <a
+            href="https://account.smartthings.com/tokens"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-sky-400 hover:text-sky-300"
+            title="SmartThings'ten token al (24 saatte yenilenir)"
+          >
+            token al ↗
+          </a>
           <span
             className={`h-2 w-2 rounded-full ${has ? "bg-green-400" : "bg-white/30"}`}
             title={has ? "token var" : "token yok"}
