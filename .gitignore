@@ -1,0 +1,28 @@
+# ===== secrets (ASLA commit edilmez) =====
+.env
+.env.*
+**/.env.local
+**/.env*.local
+
+# ===== node / next =====
+node_modules/
+**/node_modules/
+st-playground/.next/
+st-playground/out/
+st-playground/build/
+st-playground/next-env.d.ts
+
+# ===== macOS build artefaktları =====
+macapp/*.app/
+macapp/build/
+
+# ===== OS =====
+.DS_Store
+**/.DS_Store
+
+# ===== decompile çıktıları: Samsung iç API haritası (yerelde kalır, public'te hukuki risk) =====
+smartthings_endpoints_full.tsv
+smartthings_urls_raw.txt
+
+# ===== decompile edilmiş kaynak / APK =====
+*.apk
